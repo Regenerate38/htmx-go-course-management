@@ -1,20 +1,48 @@
 <div
   id="modal"
-  _="on closeModal add .closing then wait for animationend then remove me"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+  _="on closeModal remove me; console.log('Modal closed')"
 >
-  <div class="modal-underlay" _="on click trigger closeModal"></div>
-  <div class="modal-content">
-    <!-- <h1>Modal Dialog</h1> -->
-    <!-- {{.}} This is the modal content. You can put anything here, like text, or a
-    form, or an image.
-    <br />
-    <br />
-    <button class="btn danger" _="on click trigger closeModal">Close</button> -->
-    <form>
-      {{range .}}
-      <h1>{{.Label}}</h1>
-      <input type={{.Ftype}}></input>
+  <div class="modal-content bg-white rounded-lg shadow-lg w-80 p-6 relative">
+    <button
+      class="absolute top-2 right-2 text-red-500"
+      _="on click trigger closeModal; console.log('Close button clicked')"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-x"
+      >
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
+
+    <h1 class="text-xl">{{.Label}}</h1>
+    <form hx-post="/data" hx-target="#modal" hx-swap="innerHTML">
+      <input type="hidden" name="contentType" value="{{.Label}}" />
+      {{range .FComponent}}
+      <h1 class="text-lg font-semibold mb-2">{{.Label}}</h1>
+      <input
+        type="{{.Ftype}}"
+        name="{{.Label}}"
+        class="border border-gray-300 rounded-md p-2 w-full mb-4"
+      />
       {{end}}
+
+      <button
+        type="submit"
+        class="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600"
+      >
+        Submit
+      </button>
     </form>
   </div>
 </div>

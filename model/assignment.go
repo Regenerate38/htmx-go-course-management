@@ -3,9 +3,9 @@ package model
 import "time"
 
 type Assignment struct {
-	AssignmentID   int
-	ChapterID      int
-	AssignmentType string
-	AssignedDate   time.Time
-	Deadline       time.Time
+	AssignmentID   int       `db:"assignment_id"`
+	ChapterID      int       `db:"chapter_id"`
+	AssignmentType string    `db:"assignment_type"`
+	AssignedDate   time.Time `db:"assigned_date"`
+	Deadline       time.Time `db:"deadline"`
 }

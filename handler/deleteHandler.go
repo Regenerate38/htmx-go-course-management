@@ -4,20 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"htmx-go-course-management/database"
-	"htmx-go-course-management/model"
 
-	// "htmx-go-course-management/templates"
 	"net/http"
-	"reflect"
 
 	"github.com/gorilla/mux"
 )
 
 func DeleteHandler(w http.ResponseWriter, r *http.Request) {
-	var items interface{}
-	var itemType reflect.Type
+
 	var err error
-	var name string
 	var message string
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -36,68 +31,35 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 	switch contentType {
 	case "Department":
 		err = database.DeleteDept(database.DB, id)
-		if err != nil {
-			message = fmt.Sprintf("%s %s %d", w, err.Error(), http.StatusInternalServerError)
-			fmt.Println(message)
-		}
-		items, err = database.GetDept(database.DB)
-		itemType = reflect.TypeOf(model.Department{})
-		name = "Department"
 	case "Course":
-		items, err = database.GetCourses(database.DB)
-		itemType = reflect.TypeOf(model.Course{})
-		name = "Courses"
+		err = database.DeleteCourse(database.DB, id)
 	case "Chapter":
-		items, err = database.GetChapters(database.DB)
-		itemType = reflect.TypeOf(model.Chapter{})
-		name = "Chapters"
+		err = database.DeleteChapter(database.DB, id)
 	case "Topic":
-		items, err = database.GetTopics(database.DB)
-		itemType = reflect.TypeOf(model.Topic{})
-		name = "Topics"
+		err = database.DeleteTopic(database.DB, id)
 	case "Lecture":
-		items, err = database.GetLectures(database.DB)
-		itemType = reflect.TypeOf(model.Lecture{})
-		name = "Lecture"
+		err = database.DeleteLecture(database.DB, id)
 	case "Resource":
-		items, err = database.GetResource(database.DB)
-		itemType = reflect.TypeOf(model.Resource{})
-		name = "Resource"
+		err = database.DeleteResource(database.DB, id)
 	case "Section":
-		items, err = database.GetSection(database.DB)
-		itemType = reflect.TypeOf(model.Section{})
-		name = "Section"
+		err = database.DeleteSection(database.DB, id)
 	case "Faculty":
-		items, err = database.GetFaculty(database.DB)
-		itemType = reflect.TypeOf(model.Faculty{})
-		name = "Faculty"
+		err = database.DeleteFaculty(database.DB, id)
 	case "Quiz":
-		items, err = database.GetQuiz(database.DB)
-		itemType = reflect.TypeOf(model.Quiz{})
-		name = "Quiz"
+		err = database.DeleteQuiz(database.DB, id)
 	case "Assignment":
-		items, err = database.GetAssignment(database.DB)
-		itemType = reflect.TypeOf(model.Assignment{})
-		name = "Assignment"
+		err = database.DeleteAssignment(database.DB, id)
 	default:
 		http.Error(w, "Invalid content type", http.StatusBadRequest)
 		return
 	}
-
 	if err != nil {
 		message = fmt.Sprintf("%s %d", err.Error(), http.StatusInternalServerError)
 		fmt.Println(message)
 	}
-
-	header := extractHeaders(itemType)
-	rows := extractRows(items)
-
-	fmt.Println(header, rows, name)
-	// passed := model.PassedData{
-	// 	Name:   name,
-	// 	Header: header,
-	// 	Data:   rows,
-	// }
+	if err == nil {
+		message = "Delete operation successfully done"
+	}
 
 	response := map[string]string{
 		"message": message,

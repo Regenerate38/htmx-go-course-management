@@ -1,6 +1,6 @@
 package model
 
 type Faculty struct {
-	FacultyName    string
-	DepartmentName string
+	FacultyName    string `db:"faculty_name"`
+	DepartmentName string `db:"department_name"`
 }

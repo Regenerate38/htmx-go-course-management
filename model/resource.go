@@ -1,10 +1,10 @@
 package model
 
 type Resource struct {
-	ResourceID   int
-	CourseID     int
-	TeacherID    int
-	ResourceName string
-	ResourceType string
-	Content      string
+	ResourceID   int    `db:"resource_id"`
+	CourseID     int    `db:"course_id"`
+	TeacherID    int    `db:"teacher_id"`
+	ResourceName string `db:"resource_name"`
+	ResourceType string `db:"resouce_type"`
+	Content      string `db:"content"`
 }

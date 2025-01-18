@@ -1,9 +1,9 @@
 package model
 
 type Section struct {
-	SectionID   int
-	SectionName string
-	Semester    string
-	Year        string
-	FacultyName string
+	SectionID   int    `db:"section_id"`
+	SectionName string `db:"section_name"`
+	Semester    string `db:"semester"`
+	Year        string `db:"year"`
+	FacultyName string `db:"faculty"`
 }

@@ -36,15 +36,15 @@ func processContentType(contentType string) model.PassedData {
 	case "Course":
 		items, _ = database.GetCourses(database.DB)
 		itemType = reflect.TypeOf(model.Course{})
-		name = "Courses"
+		name = "Course"
 	case "Chapter":
 		items, _ = database.GetChapters(database.DB)
 		itemType = reflect.TypeOf(model.Chapter{})
-		name = "Chapters"
+		name = "Chapter"
 	case "Topic":
 		items, _ = database.GetTopics(database.DB)
 		itemType = reflect.TypeOf(model.Topic{})
-		name = "Topics"
+		name = "Topic"
 	case "Lecture":
 		items, _ = database.GetLectures(database.DB)
 		itemType = reflect.TypeOf(model.Lecture{})
