@@ -2,6 +2,7 @@ package main
 
 import (
 	// "htmx-go-course-management/database"
+	"htmx-go-course-management/database"
 	"htmx-go-course-management/router"
 	"net/http"
 
@@ -10,7 +11,7 @@ import (
 
 func main() {
 
-	// database.InitDB()
+	database.InitDB()
 	Router := mux.NewRouter()
 	router.Setuproutes(Router)
 

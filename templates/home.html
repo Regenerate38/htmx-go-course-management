@@ -1,36 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="<https://unpkg.com/htmx.org@1.9.12>"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
     <title>Home Page</title>
-</head>
-<body>
-    <div class="flex flex-row">
-        <div class="flex flex-col">
-            <h2>Course Management</h2>
-            {{range .}}
-            <a href="">{{.}}</a>
-            {{end}}
-        </div>
-        <div class="flex flex-col">
-            <h1>Add Records</h1>
-            <div class="flex flex-row flex-wrap">
-                {{range .}}
-                <button class="btn primary" hx-target="#addTaskForm" hx-swap="beforeend">
-                    {{.}}
-                </button>
-                {{end}}
-            </div>
-        </div>
 
+    <style>
+      /***** MODAL DIALOG ****/
+      #modal {
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+
+        /* Flexbox centers the .modal-content vertically and horizontally */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        /* Animate when opening */
+        animation-name: fadeIn;
+        animation-duration: 150ms;
+        animation-timing-function: ease;
+      }
+
+      #modal > .modal-underlay {
+        /* underlay takes up the entire viewport. This is only
+              required if you want to click to dismiss the popup */
+        position: absolute;
+        z-index: -1;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+      }
+
+      #modal > .modal-content {
+        /* Position visible dialog near the top of the window */
+        margin-top: 10vh;
+
+        /* Sizing for visible dialog */
+        width: 80%;
+        max-width: 600px;
+
+        /* Display properties for visible dialog*/
+        border: solid 1px #999;
+        border-radius: 8px;
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+        background-color: white;
+        padding: 20px;
+
+        /* Animate when opening */
+        animation-name: zoomIn;
+        animation-duration: 150ms;
+        animation-timing-function: ease;
+      }
+
+      #modal.closing {
+        /* Animate when closing */
+        animation-name: fadeOut;
+        animation-duration: 150ms;
+        animation-timing-function: ease;
+      }
+
+      #modal.closing > .modal-content {
+        /* Animate when closing */
+        animation-name: zoomOut;
+        animation-duration: 150ms;
+        animation-timing-function: ease;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes zoomIn {
+        0% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes zoomOut {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(0.9);
+        }
+      }
+    </style>
+  </head>
+  <body class="flex flex-row">
+    <div class="flex h-screen transition-all duration-300 peer" id="sidebar">
+      <input type="checkbox" id="sidebar-toggle" class="hidden peer" />
+
+      <div
+        class="flex flex-col h-full border border-black bg-white transition-all duration-300 w-16 peer-checked:w-64"
+      >
+        <label
+          for="sidebar-toggle"
+          class="flex items-center justify-center cursor-pointer h-16 bg-gray-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-menu"
+          >
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+          <h3 class="text-2xl hidden peer-checked:block">Course Management</h3>
+        </label>
+
+        <div
+          class="flex flex-col items-start mt-4 space-y-2 overflow-hidden w-full"
+        >
+          {{range .}}
+          <button
+            hx-get="/data"
+            hx-target="#content"
+            hx-swap="innerHTML"
+            hx-vals='{"contentType": "{{ . }}"}'
+            class="block p-2 text-gray-700 hover:bg-gray-200 w-full"
+          >
+            {{.}}
+          </button>
+
+          {{end}}
+        </div>
+      </div>
     </div>
-    </div>
-</body>
+
+    <div
+      class="flex flex-col m-4"
+      id="content"
+      hx-get="/addpage"
+      hx-trigger="load"
+      hx-target="this"
+      hx-swap="innerHTML"
+    ></div>
+  </body>
 </html>
-
-
