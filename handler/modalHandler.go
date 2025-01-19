@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"htmx-go-course-management/model"
 	"htmx-go-course-management/templates"
 	"net/http"
@@ -9,8 +10,9 @@ import (
 )
 
 type FormComponent struct {
-	Label string
-	Ftype string
+	Label  string
+	Ftype  string
+	Fvalue string
 }
 
 type Form struct {
@@ -141,4 +143,28 @@ func GenerateFormComponents(data interface{}) []FormComponent {
 	}
 
 	return components
+}
+
+func GenerateFormValues(component interface{}) []FormComponent {
+	var formComponents []FormComponent
+	val := reflect.ValueOf(component)
+	typ := reflect.TypeOf(component)
+
+	for i := 0; i < val.NumField(); i++ {
+		field := typ.Field(i)
+		label := field.Name                // Get the db tag as the label
+		fType := field.Type.Name()         // Get the field type name
+		fValue := val.Field(i).Interface() // Get the value of the field
+		fValueStr := fmt.Sprintf("%v", fValue)
+
+		formComponent := FormComponent{
+			Label:  label,
+			Ftype:  fType,
+			Fvalue: fValueStr, // Store the field value
+		}
+
+		formComponents = append(formComponents, formComponent)
+	}
+
+	return formComponents
 }

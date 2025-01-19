@@ -5,3 +5,8 @@ type PassedData struct {
 	Header []string
 	Data   [][]interface{}
 }
+type ModelData struct {
+	Name   string
+	Header []string
+	Data   []interface{}
+}

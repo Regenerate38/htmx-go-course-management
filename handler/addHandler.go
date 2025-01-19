@@ -7,6 +7,7 @@ import (
 	"htmx-go-course-management/model"
 	"reflect"
 	"strconv"
+	"time"
 
 	"net/http"
 )
@@ -94,30 +95,68 @@ func AddHandler(w http.ResponseWriter, r *http.Request) {
 
 func populateStruct(data interface{}, formValues map[string][]string) error {
 	val := reflect.ValueOf(data).Elem()
+	typ := val.Type()
+
 	for key, values := range formValues {
-		field := val.FieldByName(key)
-		if field.IsValid() && field.CanSet() {
-			switch field.Kind() {
-			case reflect.String:
+		var field reflect.Value
+		var fieldFound bool
+
+		// Iterate through struct fields to find a matching tag or name
+		for i := 0; i < typ.NumField(); i++ {
+			structField := typ.Field(i)
+			tag := structField.Tag.Get("db")           // Get the "db" tag
+			if tag == key || structField.Name == key { // Match by tag or field name
+				field = val.Field(i)
+				fieldFound = true
+				break
+			}
+		}
+
+		if !fieldFound || !field.IsValid() || !field.CanSet() {
+			fmt.Printf("Field '%s' is invalid or cannot be set\n", key)
+			continue
+		}
+
+		switch field.Kind() {
+		case reflect.String:
+			if len(values) > 0 {
 				field.SetString(values[0])
-			case reflect.Int:
+			}
+		case reflect.Int:
+			if len(values) > 0 {
 				intValue, err := strconv.Atoi(values[0])
 				if err == nil {
 					field.SetInt(int64(intValue))
 				}
-			case reflect.Float32:
+			}
+		case reflect.Float32:
+			if len(values) > 0 {
 				floatValue, err := strconv.ParseFloat(values[0], 32)
 				if err == nil {
 					field.SetFloat(float64(floatValue))
 				}
-			case reflect.Float64:
+			}
+		case reflect.Float64:
+			if len(values) > 0 {
 				floatValue, err := strconv.ParseFloat(values[0], 64)
 				if err == nil {
 					field.SetFloat(floatValue)
 				}
-			default:
-				return fmt.Errorf("unsupported field type: %s", field.Kind())
 			}
+		case reflect.Struct:
+			if field.Type() == reflect.TypeOf(time.Time{}) && len(values) > 0 {
+				fmt.Println("Reached here for time")
+				dateValue, err := time.Parse("2006-01-02 15:04:05 -0700 UTC", values[0]) // Custom layout for your time format
+				fmt.Println("aako date", values[0])
+				if err == nil {
+					field.Set(reflect.ValueOf(dateValue))
+					fmt.Println("time set according to populate struct", field)
+				} else {
+					return fmt.Errorf("failed to parse time for field '%s': %v", key, err)
+				}
+			}
+		default:
+			return fmt.Errorf("unsupported field type: %s", field.Kind())
 		}
 	}
 	return nil
