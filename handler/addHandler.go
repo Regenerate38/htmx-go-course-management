@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"encoding/json"
 	"fmt"
 	"htmx-go-course-management/database"
 	"htmx-go-course-management/model"
@@ -84,12 +83,9 @@ func AddHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "Received data: %+v\n", data)
-
-	response := map[string]string{
-		"message": message,
-	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	w.Header().Set("Content-Type", "text/plain")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(message))
 
 }
 

@@ -29,7 +29,17 @@
 
     <h1 class="text-xl font-semibold mb-4 text-center">{{.Label}}</h1>
 
-    <form hx-put="/data" hx-target="#modal" hx-swap="innerHTML">
+    <form
+      hx-put="/data"
+      hx-target="#delModal-content"
+      hx-swap="innerHTML"
+      hx-on="htmx:afterRequest: if (event.detail.xhr.status === 200) { 
+        const response = JSON.parse(event.detail.xhr.responseText);
+        document.getElementById('delModal-content').innerHTML = response.message; 
+          document.getElementById('modal').remove(); 
+          document.getElementById('delModal').classList.remove('hidden'); 
+      }"
+    >
       <input type="hidden" name="contentType" value="{{.Label}}" />
 
       <div class="grid grid-cols-2 gap-4 mb-4">

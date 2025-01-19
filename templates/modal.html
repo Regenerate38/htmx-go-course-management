@@ -29,10 +29,15 @@
 
     <h1 class="text-xl font-semibold mb-4 text-center">{{.Label}}</h1>
 
-    <form hx-post="/data">
+    <form
+      hx-post="/data"
+      hx-target="#add-content"
+      hx-swap="innerHTML"
+      hx-on="htmx:afterRequest: if (event.detail.xhr.status === 200) { document.getElementById('submit-button').classList.add('hidden'); }"
+    >
       <input type="hidden" name="contentType" value="{{.Label}}" />
 
-      <div class="grid grid-cols-2 gap-4 mb-4">
+      <div id="add-content" class="grid grid-cols-2 gap-4 mb-4">
         {{range .FComponent}}
         <div>
           <label class="text-sm font-semibold mb-1 block">{{.Label}}</label>
@@ -47,6 +52,7 @@
 
       <button
         type="submit"
+        id="submit-button"
         class="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-200 w-full"
       >
         Submit
