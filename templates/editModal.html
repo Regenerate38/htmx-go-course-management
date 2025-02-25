@@ -27,7 +27,9 @@
       </svg>
     </button>
 
-    <h1 class="text-xl font-semibold mb-4 text-center">{{.Label}}</h1>
+    <h1 class="text-xl font-semibold mb-4 text-center text-indigo-600">
+      {{.Label}}
+    </h1>
 
     <form
       hx-put="/data"
@@ -36,8 +38,8 @@
       hx-on="htmx:afterRequest: if (event.detail.xhr.status === 200) { 
         const response = JSON.parse(event.detail.xhr.responseText);
         document.getElementById('delModal-content').innerHTML = response.message; 
-          document.getElementById('modal').remove(); 
-          document.getElementById('delModal').classList.remove('hidden'); 
+        document.getElementById('modal').remove(); 
+        document.getElementById('delModal').classList.remove('hidden'); 
       }"
     >
       <input type="hidden" name="contentType" value="{{.Label}}" />
@@ -45,12 +47,14 @@
       <div class="grid grid-cols-2 gap-4 mb-4">
         {{range .FComponent}}
         <div>
-          <label class="text-sm font-semibold mb-1 block">{{.Label}}</label>
+          <label class="text-sm font-semibold mb-1 block text-gray-700"
+            >{{.Label}}</label
+          >
           <input
             type="text"
             name="{{.Label}}"
             value="{{.Fvalue}}"
-            class="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-blue-300 transition duration-200"
+            class="border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:ring focus:ring-indigo-300 transition duration-200"
           />
         </div>
         {{end}}
@@ -58,7 +62,7 @@
 
       <button
         type="submit"
-        class="bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-200 w-full"
+        class="bg-indigo-600 text-white rounded-md px-4 py-2 hover:bg-indigo-700 transition duration-200 w-full"
       >
         Submit
       </button>
