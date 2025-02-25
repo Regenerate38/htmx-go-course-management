@@ -33,6 +33,10 @@
             hx-target="body"
             hx-swap="beforeend"
             hx-vals='{"contentType": "{{ $content_type}}"}'
+            hx-on="htmx:afterRequest: if (event.detail.xhr.status !== 200) {
+            const response = JSON.parse(event.detail.xhr.responseText);
+            alert('Error: ' + response.message); // You can customize this error handling
+          }"
           >
             Edit
           </button>

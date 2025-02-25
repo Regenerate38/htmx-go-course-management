@@ -39,6 +39,8 @@ func UpdateHandler(w http.ResponseWriter, r *http.Request) {
 		data = &model.Quiz{}
 	case "Assignment":
 		data = &model.Assignment{}
+	case "Teacher":
+		data = &model.Teacher{}
 	default:
 		http.Error(w, "Invalid content type", http.StatusBadRequest)
 		return
@@ -103,6 +105,11 @@ func UpdateHandler(w http.ResponseWriter, r *http.Request) {
 	case *model.Assignment:
 		if err := database.GenericUpdate(database.DB, "assignment", d); err != nil {
 			http.Error(w, "Failed to update assignment", http.StatusInternalServerError)
+			return
+		}
+	case *model.Teacher:
+		if err := database.GenericUpdate(database.DB, "teacher", d); err != nil {
+			http.Error(w, "Failed to update teacher", http.StatusInternalServerError)
 			return
 		}
 	default:

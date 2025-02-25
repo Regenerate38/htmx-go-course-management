@@ -5,6 +5,6 @@ type Resource struct {
 	CourseID     int    `db:"course_id"`
 	TeacherID    int    `db:"teacher_id"`
 	ResourceName string `db:"resource_name"`
-	ResourceType string `db:"resouce_type"`
+	ResourceType string `db:"resource_type"`
 	Content      string `db:"content"`
 }

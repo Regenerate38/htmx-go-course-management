@@ -49,6 +49,7 @@ func GenericUpdate(dbPointer *sql.DB, tableName string, data interface{}) error 
 		sqlJoin(setClauses),
 		idColumn,
 	)
+	fmt.Println(query)
 
 	stmt, err := dbPointer.Prepare(query)
 	if err != nil {
