@@ -8,6 +8,11 @@
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
     <title>Course Management</title>
+    <style>
+      .active {
+        background-color: #4c51bf;
+      }
+    </style>
   </head>
   <body class="font-sans bg-gray-50 flex">
     <div class="flex h-screen w-full">
@@ -39,7 +44,8 @@
           hx-get="/addpage"
           hx-target="#content"
           hx-swap="innerHTML"
-          class="block py-3 px-4 text-lg font-medium text-gray-100 hover:bg-indigo-800 transition-colors w-full"
+          class="block py-3 px-4 text-lg font-medium text-gray-100 hover:bg-indigo-800 transition-colors w-full active"
+          onclick="highlightActive(this)"
         >
           Dashboard
         </button>
@@ -52,6 +58,7 @@
             hx-swap="innerHTML"
             hx-vals='{"contentType": "{{ . }}"}'
             class="block py-3 px-4 text-lg font-medium text-gray-100 hover:bg-indigo-800 transition-colors w-full"
+            onclick="highlightActive(this)"
           >
             View {{.}}s
           </button>
@@ -71,5 +78,16 @@
         <!-- The dynamic content will be injected here -->
       </div>
     </div>
+
+    <script>
+      function highlightActive(button) {
+        let buttons = document.querySelectorAll(".w-full");
+        buttons.forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+      }
+    </script>
   </body>
 </html>

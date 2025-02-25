@@ -1,0 +1,34 @@
+<div id="details-table" class="mt-8 p-6 bg-white shadow-lg rounded-lg h-2/5">
+  <h2 class="text-2xl font-semibold text-indigo-700">
+    {{.Parent}} - {{.Value}}
+  </h2>
+  {{range .TableData}}
+  <div class="mt-8">
+    <h3 class="text-lg font-semibold text-indigo-700">{{.Name}}</h3>
+    <table class="mt-2 min-w-full border-collapse">
+      <thead class="bg-indigo-600 text-white rounded-t-lg">
+        <tr>
+          {{range .Header}}
+          <th
+            class="border-t border-b border-gray-300 px-6 py-3 text-left text-sm font-medium text-gray-100"
+          >
+            {{.}}
+          </th>
+          {{end}}
+        </tr>
+      </thead>
+      <tbody>
+        {{range .Data}}
+        <tr>
+          {{range .}}
+          <td class="border-b border-gray-300 px-6 py-3 text-sm text-gray-700">
+            {{.}}
+          </td>
+          {{end}}
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+  {{end}}
+</div>

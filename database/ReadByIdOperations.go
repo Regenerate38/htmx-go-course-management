@@ -119,7 +119,7 @@ func GetSectionByID(dbPointer *sql.DB, id string) (model.Section, error) {
 // GetFacultyByID retrieves a faculty member by their ID.
 func GetFacultyByID(dbPointer *sql.DB, id string) (model.Faculty, error) {
 	var faculty model.Faculty
-	query := "SELECT * FROM faculty WHERE faculty_id = ?"
+	query := "SELECT * FROM faculty WHERE faculty_name = ?"
 	if err := GenericGetByID(dbPointer, query, id, &faculty); err != nil {
 		return faculty, err
 	}

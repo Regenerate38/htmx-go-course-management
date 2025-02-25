@@ -17,6 +17,7 @@ func Setuproutes(router *mux.Router) {
 	router.HandleFunc("/data", handler.AddHandler).Methods("POST")
 	router.HandleFunc("/data", handler.UpdateHandler).Methods("PUT")
 	router.HandleFunc("/edit/{id}", handler.EditHandler).Methods("GET")
+	router.HandleFunc("/details/{id}", handler.DetailsHandler).Methods("GET")
 
 	// s := router.PathPrefix("/courses").Subrouter()
 	// s.HandleFunc("/", handler.Homepage).Methods("GET")
