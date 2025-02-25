@@ -49,6 +49,10 @@ func processContentType(contentType string) model.PassedData {
 		items, _ = database.GetLectures(database.DB)
 		itemType = reflect.TypeOf(model.Lecture{})
 		name = "Lecture"
+	case "Teacher":
+		items, _ = database.GetTeachers(database.DB)
+		itemType = reflect.TypeOf(model.Teacher{})
+		name = "Teacher"
 	case "Resource":
 		items, _ = database.GetResource(database.DB)
 		itemType = reflect.TypeOf(model.Resource{})

@@ -60,6 +60,13 @@ func ModalHandler(w http.ResponseWriter, r *http.Request) {
 			Label:      "Lecture",
 			FComponent: formComponents,
 		}
+	case "Teacher":
+		component := model.Teacher{}
+		formComponents = GenerateFormComponents(component)
+		form = Form{
+			Label:      "Teacher",
+			FComponent: formComponents,
+		}
 	case "Resource":
 		component := model.Resource{}
 		formComponents = GenerateFormComponents(component)

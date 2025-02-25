@@ -1,26 +1,31 @@
 <div>
-  <h1 class="text-2xl p-4">Add Records</h1>
-  <div class="flex flex-row flex-wrap gap-4">
-    {{range .}}
-    <button
-      hx-get="/modal"
-      hx-target="body"
-      hx-swap="beforeend"
-      hx-vals='{"modalType": "{{ . }}"}'
-      class="flex items-center h-24 rounded-md border w-36 justify-center border-slate-300 py-2 px-4 text-center transition-all shadow-sm hover:shadow-lg text-xl text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-    >
-      + <br />
-      {{.}}
-    </button>
-    {{end}}
-  </div>
-  <div class="flex flex-col space-y-2 items-start justify-center mt-10">
-    <h2>To run specific queries, use the below textbox:</h2>
-    <div id="departmentList" class="w-96 h-80 border border-gray-300 p-2"></div>
-    <button
-      class="rounded-md border w-20 border-slate-300 py-2 px-4 text-center transition-all shadow-sm hover:shadow-lg text-xl text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-    >
-      Go
-    </button>
+  <h1 class="text-4xl py-4">Welcome to Course Management System</h1>
+  <div>
+    <h1 class="text-2xl py-4">Add Records</h1>
+    <div class="flex flex-row flex-wrap gap-4">
+      {{range .}}
+      <button
+        hx-get="/modal"
+        hx-target="body"
+        hx-swap="beforeend"
+        hx-vals='{"modalType": "{{ . }}"}'
+        class="flex items-center h-24 rounded-md border w-36 justify-center border-slate-300 py-2 px-4 text-center transition-all shadow-sm hover:shadow-lg text-xl text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+      >
+        + <br />
+        {{.}}
+      </button>
+      {{end}}
+    </div>
+    <div class="flex flex-col space-y-2 items-start justify-center mt-10">
+      <h2 class="text-2xl">Statistics</h2>
+      <div
+        class="flex flex-col m-4"
+        id="content"
+        hx-get="/stats"
+        hx-trigger="load"
+        hx-target="this"
+        hx-swap="innerHTML"
+      ></div>
+    </div>
   </div>
 </div>

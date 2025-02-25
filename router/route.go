@@ -12,6 +12,7 @@ func Setuproutes(router *mux.Router) {
 	router.HandleFunc("/modal", handler.ModalHandler).Methods("GET")
 	router.HandleFunc("/data", handler.ReadHandler).Methods("GET")
 	router.HandleFunc("/addpage", handler.AddPageHandler).Methods("GET")
+	router.HandleFunc("/stats", handler.StatsHandler).Methods("GET")
 	router.HandleFunc("/data/{id}", handler.DeleteHandler).Methods("DELETE")
 	router.HandleFunc("/data", handler.AddHandler).Methods("POST")
 	router.HandleFunc("/data", handler.UpdateHandler).Methods("PUT")

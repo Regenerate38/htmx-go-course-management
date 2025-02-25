@@ -47,6 +47,8 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 		err = database.DeleteFaculty(database.DB, id)
 	case "Quiz":
 		err = database.DeleteQuiz(database.DB, id)
+	case "Teacher":
+		err = database.DeleteTeacher(database.DB, id)
 	case "Assignment":
 		err = database.DeleteAssignment(database.DB, id)
 	default:

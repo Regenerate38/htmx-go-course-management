@@ -45,6 +45,8 @@ func AddHandler(w http.ResponseWriter, r *http.Request) {
 		data = &model.Quiz{}
 	case "Assignment":
 		data = &model.Assignment{}
+	case "Teacher":
+		data = &model.Teacher{}
 	default:
 		http.Error(w, "Invalid content type", http.StatusBadRequest)
 		return
@@ -76,6 +78,8 @@ func AddHandler(w http.ResponseWriter, r *http.Request) {
 		database.GenericAdd(database.DB, "quiz", d)
 	case *model.Assignment:
 		database.GenericAdd(database.DB, "assignment", d)
+	case *model.Teacher:
+		database.GenericAdd(database.DB, "teacher", d)
 
 	default:
 		http.Error(w, "Unsupported data type", http.StatusInternalServerError)

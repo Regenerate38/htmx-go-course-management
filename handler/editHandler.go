@@ -48,6 +48,13 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 			Label:      "Chapter",
 			FComponent: formComponents,
 		}
+	case "Teacher":
+		item, err = database.GetTeacherByID(database.DB, id)
+		formComponents := GenerateFormValues(item)
+		item = Form{
+			Label:      "Teacher",
+			FComponent: formComponents,
+		}
 	case "Topic":
 		item, err = database.GetTopicByID(database.DB, id)
 		formComponents := GenerateFormValues(item)

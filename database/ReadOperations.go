@@ -52,6 +52,29 @@ func GetCourses(dbPointer *sql.DB) ([]model.Course, error) {
 	}
 	return depts, nil
 }
+func GetTeachers(dbPointer *sql.DB) ([]model.Teacher, error) {
+
+	query := "SELECT * FROM teacher"
+	rows, err := dbPointer.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var teachers []model.Teacher
+	for rows.Next() {
+		var teacher model.Teacher
+		rowErr := rows.Scan(&teacher.TeacherID, &teacher.TeacherName, &teacher.DepartmentName)
+		if rowErr != nil {
+			return nil, err
+		}
+		teachers = append(teachers, teacher)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return teachers, nil
+}
 
 func GetChapters(dbPointer *sql.DB) ([]model.Chapter, error) {
 

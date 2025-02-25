@@ -60,6 +60,9 @@ func DeleteSection(dbPointer *sql.DB, id string) error {
 func DeleteFaculty(dbPointer *sql.DB, id string) error {
 	return GenericDelete(dbPointer, "faculty", "faculty_name", id)
 }
+func DeleteTeacher(dbPointer *sql.DB, id string) error {
+	return GenericDelete(dbPointer, "teacher", "teacher_id", id)
+}
 
 func DeleteQuiz(dbPointer *sql.DB, id string) error {
 	return GenericDelete(dbPointer, "quiz", "quiz_id", id)

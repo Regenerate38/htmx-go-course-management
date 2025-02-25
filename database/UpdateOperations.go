@@ -25,14 +25,14 @@ func GenericUpdate(dbPointer *sql.DB, tableName string, data interface{}) error 
 	// Iterate over fields to build SET clauses and get ID
 	for i := 0; i < val.NumField(); i++ {
 		field := val.Type().Field(i)
-		columnName := field.Tag.Get("db") // Use struct tags for column names
+		columnName := field.Tag.Get("db")
 		if columnName == "" {
 			columnName = field.Name // Fallback to field name if no tag is present
 		}
 
 		fieldValue := val.Field(i)
 
-		if i == 0 { // Assuming first field is the ID
+		if i == 0 {
 			idColumn = columnName
 			idValue = fieldValue.Interface()
 			continue // Skip adding ID to SET clauses
@@ -42,7 +42,7 @@ func GenericUpdate(dbPointer *sql.DB, tableName string, data interface{}) error 
 		values = append(values, fieldValue.Interface())
 	}
 
-	values = append(values, idValue) // Add ID value for WHERE clause
+	values = append(values, idValue)
 
 	query := fmt.Sprintf("UPDATE `%s` SET %s WHERE %s = ?",
 		tableName,

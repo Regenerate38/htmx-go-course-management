@@ -67,6 +67,14 @@ func GetChapterByID(dbPointer *sql.DB, id string) (model.Chapter, error) {
 	}
 	return chapter, nil
 }
+func GetTeacherByID(dbPointer *sql.DB, id string) (model.Teacher, error) {
+	var teacher model.Teacher
+	query := "SELECT * FROM teacher WHERE teacher_id = ?"
+	if err := GenericGetByID(dbPointer, query, id, &teacher); err != nil {
+		return teacher, err
+	}
+	return teacher, nil
+}
 
 // GetTopicByID retrieves a topic by its ID.
 func GetTopicByID(dbPointer *sql.DB, id string) (model.Topic, error) {
