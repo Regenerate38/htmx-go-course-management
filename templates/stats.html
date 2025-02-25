@@ -1,32 +1,28 @@
-<div id="stats-table" class="py-2 bg-white">
-  <table class="min-w-full border-collapse border border-gray-300">
-    <thead class="bg-gray-200">
-      <tr>
-        <th
-          class="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 w-48"
-        >
-          Table
-        </th>
-        <th
-          class="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 w-48"
-        >
+<div
+  class="py-4 px-6 bg-white shadow-lg rounded-lg max-h-[28rem] overflow-y-auto"
+>
+  <table
+    class="min-w-full table-auto border-collapse border border-gray-300 bg-white"
+  >
+    <thead class="bg-indigo-600 text-white">
+      <tr class="sticky top-0 bg-indigo-600">
+        <th class="px-6 py-3 text-left text-sm font-semibold">Table</th>
+        <th class="px-6 py-3 text-left text-sm font-semibold">
           Number of Items
         </th>
       </tr>
     </thead>
     <tbody>
       {{range .}}
-      <tr class="hover:bg-gray-100">
-        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-600">
-          {{.TableName}}
-        </td>
-        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-600">
-          {{.Count}}
-        </td>
+      <tr class="hover:bg-indigo-50">
+        <td class="px-6 py-4 text-sm text-gray-700">{{.TableName}}</td>
+        <td class="px-6 py-4 text-sm text-gray-700">{{.Count}}</td>
       </tr>
       {{else}}
       <tr>
-        <td colspan="2">No data available</td>
+        <td colspan="2" class="px-6 py-4 text-sm text-gray-500 text-center">
+          No data available
+        </td>
       </tr>
       {{end}}
     </tbody>

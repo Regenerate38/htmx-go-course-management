@@ -1,18 +1,18 @@
 <div id="content-table" class="p-6 bg-white">
   {{ $content_type := .Name }}
-  <h1 class="text-2xl font-semibold mb-4">{{.Name}}</h1>
+  <h1 class="text-2xl font-semibold mb-4 text-indigo-600">{{.Name}}</h1>
   <table class="min-w-full border-collapse border border-gray-300">
-    <thead class="bg-gray-200">
+    <thead class="bg-indigo-600 text-white">
       <tr>
         {{range .Header}}
         <th
-          class="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700"
+          class="border border-gray-300 px-4 py-2 text-left text-sm font-medium"
         >
           {{.}}
         </th>
         {{end}}
         <th
-          class="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700"
+          class="border border-gray-300 px-4 py-2 text-left text-sm font-medium"
         >
           Actions
         </th>
@@ -20,9 +20,9 @@
     </thead>
     <tbody>
       {{range .Data}}
-      <tr class="hover:bg-gray-100">
+      <tr class="hover:bg-indigo-50">
         {{ $firstElement := index . 0 }} {{range .}}
-        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-600">
+        <td class="border border-gray-300 px-4 py-2 text-sm text-gray-700">
           {{.}}
         </td>
         {{end}}
@@ -76,7 +76,9 @@
     class="modal-content bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full"
   >
     <div class="modal-header flex justify-between items-center p-4 border-b">
-      <h5 id="modal-title" class="text-lg font-medium">Response</h5>
+      <h5 id="modal-title" class="text-lg font-medium text-indigo-600">
+        Response
+      </h5>
       <button
         type="button"
         class="text-gray-500 hover:text-gray-700"

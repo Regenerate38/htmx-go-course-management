@@ -1,23 +1,29 @@
-<div>
-  <h1 class="text-4xl py-4">Welcome to Course Management System</h1>
+<div class="space-y-8">
+  <h1 class="text-4xl font-semibold text-gray-800">
+    Welcome to the Course Management System
+  </h1>
+
   <div>
-    <h1 class="text-2xl py-4">Add Records</h1>
-    <div class="flex flex-row flex-wrap gap-4">
+    <h2 class="text-2xl font-medium text-gray-700 mb-4">Add Records</h2>
+    <div class="flex flex-row flex-wrap gap-6">
       {{range .}}
       <button
         hx-get="/modal"
         hx-target="body"
         hx-swap="beforeend"
         hx-vals='{"modalType": "{{ . }}"}'
-        class="flex items-center h-24 rounded-md border w-36 justify-center border-slate-300 py-2 px-4 text-center transition-all shadow-sm hover:shadow-lg text-xl text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        class="flex items-center h-24 rounded-md border w-36 justify-center border-slate-300 py-2 px-4 text-center transition-all shadow-md hover:shadow-lg text-xl text-slate-600 hover:text-white hover:bg-indigo-700 hover:border-indigo-700 focus:text-white focus:bg-indigo-700 focus:border-indigo-700 active:border-indogi-700 active:text-white active:bg-indigo-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       >
         + <br />
         {{.}}
       </button>
       {{end}}
     </div>
-    <div class="flex flex-col space-y-2 items-start justify-center mt-10">
-      <h2 class="text-2xl">Statistics</h2>
+  </div>
+
+  <div class="mt-10">
+    <h2 class="text-2xl font-medium text-gray-700 mb-4">Statistics</h2>
+    <div class="">
       <div
         class="flex flex-col m-4"
         id="content"
