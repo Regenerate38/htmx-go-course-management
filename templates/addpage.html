@@ -1,9 +1,18 @@
 <div class="space-y-8">
-  <h1 class="text-4xl font-semibold text-gray-800">
-    Welcome to the Course Management System
-  </h1>
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="text-4xl font-semibold text-gray-800">
+      Welcome to the Lesson Plan Management System
+    </h1>
+    <div
+      id="login-logout-btn"
+      hx-get="/check-login"
+      hx-trigger="load"
+      hx-target="#login-logout-btn"
+      hx-swap="innerHTML"
+    ></div>
+  </div>
 
-  <div>
+  <div id="add-records-container" class="hidden">
     <h2 class="text-2xl font-medium text-gray-700 mb-4">Add Records</h2>
     <div class="flex flex-row flex-wrap gap-6">
       {{range .}}
@@ -12,7 +21,7 @@
         hx-target="body"
         hx-swap="beforeend"
         hx-vals='{"modalType": "{{ . }}"}'
-        class="flex items-center h-24 rounded-md border w-36 justify-center border-slate-300 py-2 px-4 text-center transition-all shadow-md hover:shadow-lg text-xl text-slate-600 hover:text-white hover:bg-indigo-700 hover:border-indigo-700 focus:text-white focus:bg-indigo-700 focus:border-indigo-700 active:border-indogi-700 active:text-white active:bg-indigo-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        class="flex items-center h-24 rounded-md border w-36 justify-center border-slate-300 py-2 px-4 text-center transition-all shadow-md hover:shadow-lg text-xl text-slate-600 hover:text-white hover:bg-indigo-700 hover:border-indigo-700 focus:text-white focus:bg-indigo-700 focus:border-indigo-700 active:border-indigo-700 active:text-white active:bg-indigo-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       >
         + <br />
         {{.}}
@@ -35,3 +44,35 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener("htmx:afterSwap", function (event) {
+    if (event.target.id === "login-logout-btn") {
+      fetch("/check-login")
+        .then((response) => response.json())
+        .then((data) => {
+          const button = document.getElementById("login-logout-btn");
+          const addRecordsContainer = document.getElementById(
+            "add-records-container"
+          );
+
+          if (data.isLoggedIn) {
+            button.innerHTML = `
+              <a href="/logout" class="flex flex-row items-center justify-center h-14 bg-indigo-600 text-white hover:bg-indigo-900 active:bg-indigo-900 hover:text-white py-2 px-6 rounded-md text-sm font-semibold transition duration-200 ease-in-out">
+                Logout
+              </a>
+            `;
+            addRecordsContainer.classList.remove("hidden");
+          } else {
+            button.innerHTML = `
+              <a href="/login" class="flex flex-row items-center justify-center h-14 bg-indigo-600 text-white hover:bg-indigo-900 active:bg-indigo-900 hover:text-white py-2 px-6 rounded-md text-sm font-semibold transition duration-200 ease-in-out">
+                Login
+              </a>
+            `;
+            addRecordsContainer.classList.add("hidden");
+          }
+        })
+        .catch((error) => console.error("Error fetching login status:", error));
+    }
+  });
+</script>
