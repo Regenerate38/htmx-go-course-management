@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"htmx-go-course-management/database"
 	"htmx-go-course-management/model"
 	"htmx-go-course-management/templates"
@@ -28,7 +27,6 @@ func CourseDetailsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(resources)
 	chapters, err := database.GetChaptersByCourseID(database.DB, courseIDInt)
 	if err != nil {
 		http.Error(w, "Failed to fetch chapters", http.StatusInternalServerError)
@@ -36,6 +34,7 @@ func CourseDetailsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var courseDetails struct {
+		CourseID  string
 		Resources []model.Resource
 		Chapters  []struct {
 			model.Chapter
@@ -48,7 +47,9 @@ func CourseDetailsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	courseDetails.CourseID = courseID
 	courseDetails.Resources = resources
+
 	for _, chapter := range chapters {
 		var chapterDetails struct {
 			model.Chapter

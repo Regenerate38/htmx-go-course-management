@@ -20,6 +20,7 @@ func Setuproutes(router *mux.Router) {
 	router.HandleFunc("/edit/{id}", handler.EditHandler).Methods("GET")
 	router.HandleFunc("/details/{id}", handler.DetailsHandler).Methods("GET")
 	router.HandleFunc("/courseDetails", handler.CourseDetailsHandler).Methods("GET")
+	router.HandleFunc("/exportCourseDetailsPDF", handler.ExportCourseDetailsToPDF).Methods("GET")
 	router.HandleFunc("/check-login", handler.CheckLoginHandler).Methods("GET")
 	router.HandleFunc("/login", handler.LoginHandler)
 	router.HandleFunc("/logout", handler.LogoutHandler)

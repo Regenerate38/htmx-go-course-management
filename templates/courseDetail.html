@@ -9,8 +9,16 @@
   <body class="bg-gray-100 text-gray-800 h-screen">
     <!-- Header -->
     <header class="bg-indigo-700 text-white py-4 shadow-md">
-      <div class="container mx-auto px-4">
+      <div
+        class="flex flex-row justify-between items-center container mx-auto px-4"
+      >
         <h1 class="text-3xl font-bold">Course Details</h1>
+        <a
+          href="/exportCourseDetailsPDF?courseID={{ .CourseID }}"
+          class="bg-indigo-600 text-white hover:bg-indigo-900 active:bg-indigo-900 py-2 px-6 rounded-md text-sm font-semibold transition duration-200 ease-in-out"
+        >
+          Export to PDF
+        </a>
       </div>
     </header>
 
