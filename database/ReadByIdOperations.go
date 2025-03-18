@@ -145,3 +145,141 @@ func GetAssignmentByID(dbPointer *sql.DB, id string) (model.Assignment, error) {
 	}
 	return assignment, nil
 }
+
+func GetResourcesByCourseID(dbPointer *sql.DB, courseID int) ([]model.Resource, error) {
+	query := "SELECT * FROM resource WHERE course_id = ?"
+	rows, err := dbPointer.Query(query, courseID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var resources []model.Resource
+	for rows.Next() {
+		var resource model.Resource
+		rowErr := rows.Scan(&resource.ResourceID, &resource.CourseID, &resource.TeacherID, &resource.ResourceName, &resource.ResourceType, &resource.Content)
+		if rowErr != nil {
+			return nil, rowErr
+		}
+		resources = append(resources, resource)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return resources, nil
+}
+
+func GetChaptersByCourseID(dbPointer *sql.DB, courseID int) ([]model.Chapter, error) {
+	query := "SELECT * FROM chapter WHERE course_id = ?"
+	rows, err := dbPointer.Query(query, courseID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var chapters []model.Chapter
+	for rows.Next() {
+		var chapter model.Chapter
+		rowErr := rows.Scan(&chapter.ChapterID, &chapter.ChapterNumber, &chapter.ChapterName, &chapter.AllocatedTime, &chapter.CourseID)
+		if rowErr != nil {
+			return nil, rowErr
+		}
+		chapters = append(chapters, chapter)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return chapters, nil
+}
+
+func GetQuizzesByChapterID(dbPointer *sql.DB, chapterID int) ([]model.Quiz, error) {
+	query := "SELECT * FROM quiz WHERE chapter_id = ?"
+	rows, err := dbPointer.Query(query, chapterID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var quizzes []model.Quiz
+	for rows.Next() {
+		var quiz model.Quiz
+		rowErr := rows.Scan(&quiz.QuizID, &quiz.ChapterID, &quiz.StartTime, &quiz.EndTime)
+		if rowErr != nil {
+			return nil, rowErr
+		}
+		quizzes = append(quizzes, quiz)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return quizzes, nil
+}
+
+func GetAssignmentsByChapterID(dbPointer *sql.DB, chapterID int) ([]model.Assignment, error) {
+	query := "SELECT * FROM assignment WHERE chapter_id = ?"
+	rows, err := dbPointer.Query(query, chapterID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var assignments []model.Assignment
+	for rows.Next() {
+		var assignment model.Assignment
+		rowErr := rows.Scan(&assignment.AssignmentID, &assignment.ChapterID, &assignment.AssignmentType, &assignment.AssignedDate, &assignment.Deadline)
+		if rowErr != nil {
+			return nil, rowErr
+		}
+		assignments = append(assignments, assignment)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return assignments, nil
+}
+
+func GetTopicsByChapterID(dbPointer *sql.DB, chapterID int) ([]model.Topic, error) {
+	query := "SELECT * FROM topic WHERE chapter_id = ?"
+	rows, err := dbPointer.Query(query, chapterID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var topics []model.Topic
+	for rows.Next() {
+		var topic model.Topic
+		rowErr := rows.Scan(&topic.TopicID, &topic.ChapterID, &topic.TopicNumber, &topic.TopicName)
+		if rowErr != nil {
+			return nil, rowErr
+		}
+		topics = append(topics, topic)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return topics, nil
+}
+
+func GetLecturesByTopicID(dbPointer *sql.DB, topicID int) ([]model.Lecture, error) {
+	query := "SELECT * FROM lecture WHERE topic_id = ?"
+	rows, err := dbPointer.Query(query, topicID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var lectures []model.Lecture
+	for rows.Next() {
+		var lecture model.Lecture
+		rowErr := rows.Scan(&lecture.LectureID, &lecture.TeacherID, &lecture.SectionID, &lecture.ChapterID, &lecture.TopicID, &lecture.Objective, &lecture.StartTime, &lecture.EndTime, &lecture.Room)
+		if rowErr != nil {
+			return nil, rowErr
+		}
+		lectures = append(lectures, lecture)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return lectures, nil
+}
